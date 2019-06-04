@@ -1,17 +1,30 @@
-import java.util.UUID;
+package model;
 
-public class Order {
-    private String orderId;
-    private String userId;
+import javax.persistence.*;
+
+@Entity
+@Table
+public class OrderModel {
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int orderId;
+    @Column
+    private String userEmail;
+    @Column
     private Integer price;
+    @Column
     private boolean isPaid;
+    @Column
     private boolean isSuccessful;
 
-    public Order(String userId, Integer price, boolean isSuccessful) {
-        this.userId = userId;
+    public OrderModel() {
+    }
+
+    public OrderModel(String userEmail, Integer price, boolean isSuccessful) {
+        this.userEmail = userEmail;
         this.price = price;
         this.isSuccessful = isSuccessful;
-        this.orderId = UUID.randomUUID().toString();
     }
 
     public boolean isSuccessful() {
@@ -22,20 +35,20 @@ public class Order {
         isSuccessful = successful;
     }
 
-    public String getOrderId() {
+    public int getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(String orderId) {
+    public void setOrderId(int orderId) {
         this.orderId = orderId;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public Integer getPrice() {
