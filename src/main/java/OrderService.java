@@ -11,14 +11,14 @@ public class OrderService {
 
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-    public List<OrderModel> getOrdersOfUser(String userId) {
+    public List<OrderModel> getUserOrders(String userEmail) {
 
         Session session = HibernateUtil.getSessionFactory().openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<OrderModel> query = builder.createQuery(OrderModel.class);
 
         Root<OrderModel> root = query.from(OrderModel.class);
-        query.select(root).where(builder.equal(root.get("userId"), userId));
+        query.select(root).where(builder.equal(root.get("userEmail"), userEmail));
         List<OrderModel> orders = session.createQuery(query).getResultList();
 
         session.close();
@@ -44,5 +44,4 @@ public class OrderService {
         session.getTransaction().commit();
         session.close();
     }
-
 }

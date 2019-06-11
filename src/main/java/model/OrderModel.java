@@ -66,4 +66,5 @@ public class OrderModel {
     public void setPaid(boolean paid) {
         isPaid = paid;
     }
+
 }

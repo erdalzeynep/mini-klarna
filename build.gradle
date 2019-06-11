@@ -15,4 +15,5 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.3.Final'
     testCompile group: 'com.h2database', name: 'h2', version: '1.4.199'
+    testCompile 'org.apache.commons:commons-lang3:3.5'
 }

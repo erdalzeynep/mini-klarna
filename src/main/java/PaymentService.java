@@ -11,13 +11,14 @@ public class PaymentService {
         User user = userService.getOrCreateUser(userEmail);
         boolean isSuccessful = price <= User.LIMIT;
         user.setTotalDebt(user.getTotalDebt() + price);
+        userService.saveOrUpdateUser(user);
         OrderModel order = new OrderModel(userEmail, price, isSuccessful);
         orderService.saveOrUpdateOrder(order);
         return order;
     }
 
     public void pay(String userEmail, int orderId) {
-        User user = userService.getOrCreateUser(userEmail);
+        User user = userService.getUserDetail(userEmail);
         OrderModel order = orderService.getOrderDetail(orderId);
         order.setPaid(true);
         Integer updatedDebt = user.getTotalDebt() - order.getPrice();
