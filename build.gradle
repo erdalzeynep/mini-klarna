@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '2.1.5.RELEASE'
 }
 
 group 'dal.zeynep'
@@ -13,7 +14,13 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.3.Final'
-    testCompile group: 'com.h2database', name: 'h2', version: '1.4.199'
     testCompile 'org.apache.commons:commons-lang3:3.5'
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.3.Final'
+    compile group: 'com.h2database', name: 'h2', version: '1.4.199'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
 }
+
+apply plugin: 'java'
+apply plugin: 'io.spring.dependency-management'

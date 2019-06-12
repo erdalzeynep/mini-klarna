@@ -1,4 +1,7 @@
-import model.OrderModel;
+package dal.zeynep.miniklarna;
+
+import dal.zeynep.miniklarna.HibernateUtil;
+import dal.zeynep.miniklarna.model.OrderModel;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 

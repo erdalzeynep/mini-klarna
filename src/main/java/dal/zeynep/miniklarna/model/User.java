@@ -1,4 +1,4 @@
-package model;
+package dal.zeynep.miniklarna.model;
 
 import javax.persistence.*;
 

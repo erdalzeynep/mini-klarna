@@ -13,8 +13,8 @@
         <property name="show_sql">true</property>
         <property name="current_session_context_class">thread</property>
         <property name="hbm2ddl.auto">update</property>
-        <mapping class="model.User"/>
-        <mapping class="model.OrderModel"/>
+        <mapping class="dal.zeynep.miniklarna.model.User"/>
+        <mapping class="dal.zeynep.miniklarna.model.OrderModel"/>
 
     </session-factory>
 

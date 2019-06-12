@@ -1,5 +1,8 @@
-import model.OrderModel;
-import model.User;
+import dal.zeynep.miniklarna.OrderService;
+import dal.zeynep.miniklarna.PaymentService;
+import dal.zeynep.miniklarna.UserService;
+import dal.zeynep.miniklarna.model.OrderModel;
+import dal.zeynep.miniklarna.model.User;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.junit.Assert;
 import org.junit.Test;

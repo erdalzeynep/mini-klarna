@@ -1,4 +1,6 @@
-import model.User;
+package dal.zeynep.miniklarna;
+
+import dal.zeynep.miniklarna.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
