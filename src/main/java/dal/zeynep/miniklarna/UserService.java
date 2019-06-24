@@ -40,5 +40,4 @@ public class UserService {
         session.getTransaction().commit();
         session.close();
     }
-
 }

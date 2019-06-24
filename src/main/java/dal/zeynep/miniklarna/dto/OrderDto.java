@@ -4,11 +4,13 @@ public class OrderDto {
     private int orderId;
     private boolean isPaid;
     private boolean isSuccessful;
+    private Integer price;
 
-    public OrderDto(int orderId, boolean isPaid, boolean isSuccessful) {
+    public OrderDto(int orderId, boolean isPaid, boolean isSuccessful, Integer price) {
         this.orderId = orderId;
         this.isPaid = isPaid;
         this.isSuccessful = isSuccessful;
+        this.price = price;
     }
 
     public int getOrderId() {
@@ -33,5 +35,13 @@ public class OrderDto {
 
     public void setSuccessful(boolean successful) {
         isSuccessful = successful;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 }

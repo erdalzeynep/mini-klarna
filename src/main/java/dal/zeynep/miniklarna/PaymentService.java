@@ -17,7 +17,7 @@ public class PaymentService {
         userService.saveOrUpdateUser(user);
         OrderModel order = new OrderModel(userEmail, price, isSuccessful);
         orderService.saveOrUpdateOrder(order);
-        return new OrderDto(order.getOrderId() , order.isPaid() , isSuccessful);
+        return new OrderDto(order.getOrderId() , order.isPaid() , isSuccessful, price);
     }
 
     public void pay(String userEmail, int orderId) {

@@ -21,7 +21,6 @@ public class User {
         this.totalDebt = 0;
     }
 
-
     public Integer getTotalDebt() {
         return totalDebt;
     }

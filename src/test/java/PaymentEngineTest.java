@@ -1,6 +1,7 @@
 import dal.zeynep.miniklarna.OrderService;
 import dal.zeynep.miniklarna.PaymentService;
 import dal.zeynep.miniklarna.UserService;
+import dal.zeynep.miniklarna.dto.OrderDto;
 import dal.zeynep.miniklarna.model.OrderModel;
 import dal.zeynep.miniklarna.model.User;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -26,7 +27,7 @@ public class PaymentEngineTest {
         PaymentService paymentService = new PaymentService();
         User user = new User(UUID.randomUUID().toString());
         String userEmail = user.getEmail();
-        OrderModel order = paymentService.purchase(userEmail, 150);
+        OrderDto order = paymentService.purchase(userEmail, 150);
         paymentService.pay(userEmail, order.getOrderId());
         OrderService orderService = new OrderService();
         OrderModel persistedOrder = orderService.getOrderDetail(order.getOrderId());
@@ -39,9 +40,9 @@ public class PaymentEngineTest {
         OrderService orderService = new OrderService();
         User user = new User(UUID.randomUUID().toString());
         String userEmail = user.getEmail();
-        OrderModel order1 = paymentService.purchase(userEmail, 10);
-        OrderModel order2 = paymentService.purchase(userEmail, 20);
-        List<OrderModel> orderList = orderService.getUserOrders(userEmail);
+        OrderDto order1 = paymentService.purchase(userEmail, 10);
+        OrderDto order2 = paymentService.purchase(userEmail, 20);
+        List<OrderDto> orderList = orderService.getUserOrders(userEmail);
         assertEquals(2, orderList.size());
     }
 
@@ -51,9 +52,11 @@ public class PaymentEngineTest {
         OrderService orderService = new OrderService();
         User user = new User(UUID.randomUUID().toString());
         String userEmail = user.getEmail();
-        OrderModel order = paymentService.purchase(userEmail, 10);
-        OrderModel expectedOrder = orderService.getOrderDetail(order.getOrderId());
-        Assert.assertTrue(EqualsBuilder.reflectionEquals(expectedOrder, order));
+        OrderDto orderDto = paymentService.purchase(userEmail, 10);
+        OrderModel expectedOrder = orderService.getOrderDetail(orderDto.getOrderId());
+        OrderDto expectedOrderDto  = new OrderDto(expectedOrder.getOrderId() , expectedOrder. isPaid(),
+                                            expectedOrder.isSuccessful(), expectedOrder.getPrice());
+        Assert.assertTrue(EqualsBuilder.reflectionEquals(expectedOrderDto, orderDto));
     }
 
     @Test
