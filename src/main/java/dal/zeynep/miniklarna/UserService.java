@@ -1,5 +1,6 @@
 package dal.zeynep.miniklarna;
 
+import dal.zeynep.miniklarna.dto.UserDto;
 import dal.zeynep.miniklarna.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,6 +22,11 @@ public class UserService {
         User user = session.createQuery(query).uniqueResult();
         session.close();
         return user;
+    }
+
+    public UserDto getUserDebt(String userEmail){
+        User user = getUserDetail(userEmail);
+        return new UserDto(user.getTotalDebt());
     }
 
     public User getOrCreateUser(String userEmail) {
