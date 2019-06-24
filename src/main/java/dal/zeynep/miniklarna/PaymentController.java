@@ -1,6 +1,7 @@
 package dal.zeynep.miniklarna;
 
         import dal.zeynep.miniklarna.dto.OrderDto;
+        import dal.zeynep.miniklarna.dto.PaymentDto;
         import org.springframework.web.bind.annotation.PathVariable;
         import org.springframework.web.bind.annotation.RequestMapping;
         import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,5 +16,11 @@ public class PaymentController {
     public OrderDto purchase(@PathVariable("userEmail") String userEmail,
                              @PathVariable("price") Integer price) {
         return paymentService.purchase(userEmail, price);
+    }
+
+    @RequestMapping(value = "/pay/{userEmail}/{orderId}", method = RequestMethod.POST)
+    public PaymentDto purchase(@PathVariable("userEmail") String userEmail,
+                               @PathVariable("orderId") int orderId) {
+        return paymentService.pay(userEmail, orderId);
     }
 }
