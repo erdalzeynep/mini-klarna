@@ -1,5 +1,6 @@
-package dal.zeynep.miniklarna;
+package dal.zeynep.miniklarna.controller;
 
+        import dal.zeynep.miniklarna.service.PaymentService;
         import dal.zeynep.miniklarna.dto.OrderDto;
         import dal.zeynep.miniklarna.dto.PaymentDto;
         import org.springframework.web.bind.annotation.PathVariable;

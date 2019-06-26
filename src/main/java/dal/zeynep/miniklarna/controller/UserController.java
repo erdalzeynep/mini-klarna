@@ -1,5 +1,6 @@
-package dal.zeynep.miniklarna;
+package dal.zeynep.miniklarna.controller;
 
+import dal.zeynep.miniklarna.service.UserService;
 import dal.zeynep.miniklarna.dto.UserDto;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

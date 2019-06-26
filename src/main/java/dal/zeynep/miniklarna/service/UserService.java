@@ -1,5 +1,6 @@
-package dal.zeynep.miniklarna;
+package dal.zeynep.miniklarna.service;
 
+import dal.zeynep.miniklarna.HibernateUtil;
 import dal.zeynep.miniklarna.dto.UserDto;
 import dal.zeynep.miniklarna.model.User;
 import org.hibernate.Session;
