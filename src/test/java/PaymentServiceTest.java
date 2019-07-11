@@ -1,17 +1,15 @@
-import dal.zeynep.miniklarna.service.OrderService;
-import dal.zeynep.miniklarna.service.PaymentService;
-import dal.zeynep.miniklarna.service.UserService;
-import dal.zeynep.miniklarna.dto.OrderDto;
 import dal.zeynep.miniklarna.model.OrderModel;
 import dal.zeynep.miniklarna.model.User;
+import dal.zeynep.miniklarna.service.PaymentService;
+import dal.zeynep.miniklarna.service.UserService;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.List;
 import java.util.UUID;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class PaymentServiceTest {
 
@@ -53,8 +51,8 @@ public class PaymentServiceTest {
         String userEmail = UUID.randomUUID().toString();
         User user = userService.getOrCreateUser(userEmail);
         Integer debtBeforePurchase = user.getTotalDebt();
-        OrderDto orderDto = paymentService.purchase(userEmail, User.LIMIT + 1);
-        paymentService.pay(userEmail, orderDto.getOrderId());
+        OrderModel orderModel = paymentService.purchase(userEmail, User.LIMIT + 1);
+        paymentService.pay(userEmail, orderModel.getOrderId());
         Integer debtAfterPurchase = userService.getOrCreateUser(userEmail).getTotalDebt();
         assertEquals(debtBeforePurchase, debtAfterPurchase);
     }

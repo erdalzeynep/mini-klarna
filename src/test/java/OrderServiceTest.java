@@ -1,4 +1,3 @@
-import dal.zeynep.miniklarna.dto.OrderDto;
 import dal.zeynep.miniklarna.model.OrderModel;
 import dal.zeynep.miniklarna.model.User;
 import dal.zeynep.miniklarna.service.OrderService;
@@ -19,7 +18,7 @@ public class OrderServiceTest {
         PaymentService paymentService = new PaymentService();
         User user = new User(UUID.randomUUID().toString());
         String userEmail = user.getEmail();
-        OrderDto order = paymentService.purchase(userEmail, 150);
+        OrderModel order = paymentService.purchase(userEmail, 150);
         paymentService.pay(userEmail, order.getOrderId());
         OrderService orderService = new OrderService();
         OrderModel persistedOrder = orderService.getOrderDetail(order.getOrderId());
@@ -34,7 +33,7 @@ public class OrderServiceTest {
         String userEmail = user.getEmail();
         paymentService.purchase(userEmail, 10);
         paymentService.purchase(userEmail, 20);
-        List<OrderDto> orderList = orderService.getUserOrders(userEmail);
+        List<OrderModel> orderList = orderService.getUserOrders(userEmail);
         assertEquals(2, orderList.size());
     }
 
@@ -44,10 +43,8 @@ public class OrderServiceTest {
         OrderService orderService = new OrderService();
         User user = new User(UUID.randomUUID().toString());
         String userEmail = user.getEmail();
-        OrderDto orderDto = paymentService.purchase(userEmail, 10);
-        OrderModel expectedOrder = orderService.getOrderDetail(orderDto.getOrderId());
-        OrderDto expectedOrderDto  = new OrderDto(expectedOrder.getOrderId() , expectedOrder. isPaid(),
-                expectedOrder.isSuccessful(), expectedOrder.getPrice());
-        Assert.assertTrue(EqualsBuilder.reflectionEquals(expectedOrderDto, orderDto));
+        OrderModel actualOrder = paymentService.purchase(userEmail, 10);
+        OrderModel expectedOrder = orderService.getOrderDetail(actualOrder.getOrderId());
+        Assert.assertTrue(EqualsBuilder.reflectionEquals(expectedOrder, actualOrder));
     }
 }

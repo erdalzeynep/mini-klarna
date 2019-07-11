@@ -1,7 +1,5 @@
 package dal.zeynep.miniklarna.service;
 
-import dal.zeynep.miniklarna.dto.OrderDto;
-import dal.zeynep.miniklarna.dto.PaymentDto;
 import dal.zeynep.miniklarna.model.OrderModel;
 import dal.zeynep.miniklarna.model.User;
 
@@ -10,7 +8,7 @@ public class PaymentService {
     private UserService userService = new UserService();
     private OrderService orderService = new OrderService();
 
-    public OrderDto purchase(String userEmail, Integer price) {
+    public OrderModel purchase(String userEmail, Integer price) {
 
         User user = userService.getOrCreateUser(userEmail);
         boolean isSuccessful = price <= User.LIMIT;
@@ -20,10 +18,10 @@ public class PaymentService {
         userService.saveOrUpdateUser(user);
         OrderModel order = new OrderModel(userEmail, price, isSuccessful);
         orderService.saveOrUpdateOrder(order);
-        return new OrderDto(order.getOrderId(), order.isPaid(), isSuccessful, price);
+        return order;
     }
 
-    public PaymentDto pay(String userEmail, int orderId) {
+    public OrderModel pay(String userEmail, int orderId) {
         User user = userService.getUserDetail(userEmail);
         OrderModel order = orderService.getOrderDetail(orderId);
         if (order.isSuccessful()) {
@@ -32,8 +30,7 @@ public class PaymentService {
             user.setTotalDebt(updatedDebt);
             userService.saveOrUpdateUser(user);
             orderService.saveOrUpdateOrder(order);
-            return new PaymentDto(order.isPaid(), order.getPrice());
-
+            return order;
         }
         else{
             return null;
