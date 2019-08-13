@@ -1,8 +1,8 @@
-#Mini Klarna
+# Mini Klarna
  A RESTful service which users are able to purchase an order, 
  pay their debts, see their orders and see their total debts.
  
- ##How to Run
+ ## How to Run
  ```
  - git clone https://github.com/erdalzeynep/mini-klarna.git
  - cd mini-klarna
