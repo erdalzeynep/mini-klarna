@@ -4,10 +4,10 @@
  
  ## How to Run
  ```
- - git clone https://github.com/erdalzeynep/mini-klarna.git
- - cd mini-klarna
- -  ./gradlew build
- -  docker run -p 8080:8080 ~/mini-klarna:1.0-SNAPSHOT
+ git clone https://github.com/erdalzeynep/mini-klarna.git
+ cd mini-klarna
+ ./gradlew build
+ docker run -p 8080:8080 ~/mini-klarna:1.0-SNAPSHOT
  ```
  
  ### To Purchase a New Order
