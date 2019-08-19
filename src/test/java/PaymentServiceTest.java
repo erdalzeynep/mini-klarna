@@ -20,7 +20,6 @@ public class PaymentServiceTest {
         assertFalse(paymentService.purchase(user.getEmail(), User.LIMIT + 1).isSuccessful());
     }
 
-
     @Test
     public void shouldRetrieveSpecificUserDetails() {
         UserService userService = new UserService();
