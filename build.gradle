@@ -23,13 +23,13 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile 'org.apache.commons:commons-lang3:3.5'
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.3.Final'
     compile group: 'com.h2database', name: 'h2', version: '1.4.199'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'org.springframework.boot:spring-boot-starter-security'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile 'org.apache.commons:commons-lang3:3.5'
 }
 
 apply plugin: 'java'

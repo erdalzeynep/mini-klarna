@@ -3,7 +3,7 @@
  pay their debts, see their orders and see their total debts.
  
  ## How to Run
- ```
+ ```bash
  git clone https://github.com/erdalzeynep/mini-klarna.git  
  cd mini-klarna
  ./gradlew build
