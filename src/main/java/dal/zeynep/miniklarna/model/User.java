@@ -10,14 +10,17 @@ public class User {
     @Column
     private String email;
     @Column
+    private String password;
+    @Column
     private Integer totalDebt;
 
     public User() {
         this.totalDebt = 0;
     }
 
-    public User(String email) {
+    public User(String email, String password) {
         this.email  = email;
+        this.password = password ;
         this.totalDebt = 0;
     }
 
@@ -37,4 +40,11 @@ public class User {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

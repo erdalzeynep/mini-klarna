@@ -24,16 +24,32 @@ public class UserService {
         return user;
     }
 
+    public User authenticate(String userEmail , String password) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+
+        Root<User> root = query.from(User.class);
+
+        query.select(root).where(
+                builder.equal(root.get("email"), userEmail),
+                builder.equal(root.get("password"), password)
+        );
+        User user = session.createQuery(query).uniqueResult();
+        session.close();
+        return user;
+    }
+
     public int getUserDebt(String userEmail){
         User user = getUserDetail(userEmail);
         return user.getTotalDebt();
     }
 
-    public User getOrCreateUser(String userEmail) {
+    public User getOrCreateUser(String userEmail, String password) {
 
         User user = getUserDetail(userEmail);
         if (user == null) {
-            user = new User(userEmail);
+            user = new User(userEmail, password);
         }
 
         return user;

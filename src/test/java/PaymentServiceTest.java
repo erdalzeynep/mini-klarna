@@ -16,7 +16,9 @@ public class PaymentServiceTest {
     @Test
     public void shouldNotPurchaseMoreThanUserLimit() {
         PaymentService paymentService = new PaymentService();
-        User user = new User(UUID.randomUUID().toString());
+        User user = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString());
+        UserService userService = new UserService();
+        userService.saveOrUpdateUser(user);
         assertFalse(paymentService.purchase(user.getEmail(), User.LIMIT + 1).isSuccessful());
     }
 
@@ -24,7 +26,7 @@ public class PaymentServiceTest {
     public void shouldRetrieveSpecificUserDetails() {
         UserService userService = new UserService();
         String userEmail = UUID.randomUUID().toString();
-        User user = userService.getOrCreateUser(userEmail);
+        User user = new User(userEmail, UUID.randomUUID().toString());
         user.setTotalDebt(10);
         userService.saveOrUpdateUser(user);
         User expectedUser = userService.getUserDetail(userEmail);
@@ -32,27 +34,31 @@ public class PaymentServiceTest {
     }
 
     @Test
-    public void shouldNotIncreaseTotalDebtAfterRejectedPurchase(){
+    public void shouldNotIncreaseTotalDebtAfterRejectedPurchase() {
         UserService userService = new UserService();
         PaymentService paymentService = new PaymentService();
         String userEmail = UUID.randomUUID().toString();
-        User user = userService.getOrCreateUser(userEmail);
+        User user = new User(userEmail, UUID.randomUUID().toString());
+        userService.saveOrUpdateUser(user);
         Integer debtBeforePurchase = user.getTotalDebt();
         paymentService.purchase(userEmail, User.LIMIT + 1);
-        Integer debtAfterPurchase = userService.getOrCreateUser(userEmail).getTotalDebt();
+        userService.saveOrUpdateUser(user);
+        Integer debtAfterPurchase = userService.getUserDetail(userEmail).getTotalDebt();
         assertEquals(debtBeforePurchase, debtAfterPurchase);
     }
 
     @Test
-    public void shouldNotDecreaseTotalDebtAfterPaymentForRejectedOrder(){
+    public void shouldNotDecreaseTotalDebtAfterPaymentForRejectedOrder() {
         UserService userService = new UserService();
         PaymentService paymentService = new PaymentService();
         String userEmail = UUID.randomUUID().toString();
-        User user = userService.getOrCreateUser(userEmail);
+        User user = new User(userEmail, UUID.randomUUID().toString());
+        userService.saveOrUpdateUser(user);
         Integer debtBeforePurchase = user.getTotalDebt();
         OrderModel orderModel = paymentService.purchase(userEmail, User.LIMIT + 1);
         paymentService.pay(userEmail, orderModel.getOrderId());
-        Integer debtAfterPurchase = userService.getOrCreateUser(userEmail).getTotalDebt();
+        userService.saveOrUpdateUser(user);
+        Integer debtAfterPurchase = userService.getUserDetail(userEmail).getTotalDebt();
         assertEquals(debtBeforePurchase, debtAfterPurchase);
     }
 }

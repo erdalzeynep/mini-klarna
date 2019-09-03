@@ -10,7 +10,7 @@ public class PaymentService {
 
     public OrderModel purchase(String userEmail, Integer price) {
 
-        User user = userService.getOrCreateUser(userEmail);
+        User user = userService.getUserDetail(userEmail);
         boolean isSuccessful = price <= User.LIMIT;
         if (isSuccessful) {
             user.setTotalDebt(user.getTotalDebt() + price);
@@ -31,8 +31,7 @@ public class PaymentService {
             userService.saveOrUpdateUser(user);
             orderService.saveOrUpdateOrder(order);
             return order;
-        }
-        else{
+        } else {
             return null;
         }
     }
