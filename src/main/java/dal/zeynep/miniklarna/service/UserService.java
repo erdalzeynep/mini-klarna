@@ -24,7 +24,7 @@ public class UserService {
         return user;
     }
 
-    public User authenticate(String userEmail , String password) {
+    public User authenticate(String userEmail, String password) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<User> query = builder.createQuery(User.class);
@@ -40,22 +40,22 @@ public class UserService {
         return user;
     }
 
-    public int getUserDebt(String userEmail){
+    public User newUser(String email, String password) {
+        User user = new User(email, password);
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.save(user);
+        session.getTransaction().commit();
+        session.close();
+        return user;
+    }
+
+    public int getUserDebt(String userEmail) {
         User user = getUserDetail(userEmail);
         return user.getTotalDebt();
     }
 
-    public User getOrCreateUser(String userEmail, String password) {
-
-        User user = getUserDetail(userEmail);
-        if (user == null) {
-            user = new User(userEmail, password);
-        }
-
-        return user;
-    }
-
-    public void saveOrUpdateUser(User user){
+    public void saveOrUpdateUser(User user) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.saveOrUpdate(user);

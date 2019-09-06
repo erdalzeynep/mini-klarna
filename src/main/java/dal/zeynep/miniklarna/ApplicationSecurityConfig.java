@@ -1,6 +1,5 @@
 package dal.zeynep.miniklarna;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,8 +10,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private CustomAuthenticationProvider authProvider;
+    private final CustomAuthenticationProvider authProvider;
+
+    public ApplicationSecurityConfig(CustomAuthenticationProvider authProvider) {
+        this.authProvider = authProvider;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -22,7 +24,11 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
-                .authorizeRequests().anyRequest().authenticated()
-                .and().httpBasic();
+                .authorizeRequests()
+                .antMatchers("/signUp/**").permitAll()
+                .and()
+                .authorizeRequests().antMatchers("/**").authenticated()
+                .and()
+                .httpBasic();
     }
 }
