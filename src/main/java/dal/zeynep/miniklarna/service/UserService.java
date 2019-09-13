@@ -4,11 +4,13 @@ import dal.zeynep.miniklarna.HibernateUtil;
 import dal.zeynep.miniklarna.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+@Component
 public class UserService {
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
