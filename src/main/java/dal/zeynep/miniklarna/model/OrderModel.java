@@ -25,9 +25,10 @@ public class OrderModel {
         this.userEmail = userEmail;
         this.price = price;
         this.isSuccessful = isSuccessful;
+        this.isPaid = false;
     }
 
-    public boolean isSuccessful() {
+    public boolean getIsSuccessful() {
         return isSuccessful;
     }
 

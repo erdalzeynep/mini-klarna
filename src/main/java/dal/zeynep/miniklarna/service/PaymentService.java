@@ -24,7 +24,7 @@ public class PaymentService {
     public OrderModel pay(String userEmail, int orderId) {
         User user = userService.getUserDetail(userEmail);
         OrderModel order = orderService.getOrderDetail(orderId);
-        if (order.isSuccessful()) {
+        if (order.getIsSuccessful()) {
             order.setPaid(true);
             Integer updatedDebt = user.getTotalDebt() - order.getPrice();
             user.setTotalDebt(updatedDebt);

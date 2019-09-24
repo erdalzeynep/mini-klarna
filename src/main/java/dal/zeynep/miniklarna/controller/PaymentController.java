@@ -21,7 +21,7 @@ public class PaymentController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = authentication.getName();
         OrderModel order = paymentService.purchase(userEmail, price);
-        return new OrderDto(order.getOrderId(), order.isPaid(), order.isSuccessful(), order.getPrice());
+        return new OrderDto(order.getOrderId(), order.isPaid(), order.getIsSuccessful(), order.getPrice());
     }
 
     @RequestMapping(value = "/pay/{orderId}", method = RequestMethod.POST)

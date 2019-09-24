@@ -21,7 +21,7 @@ public class OrderDto {
         this.orderId = orderId;
     }
 
-    public boolean isPaid() {
+    public boolean getIsPaid() {
         return isPaid;
     }
 
@@ -29,7 +29,7 @@ public class OrderDto {
         isPaid = paid;
     }
 
-    public boolean isSuccessful() {
+    public boolean getIsSuccessful() {
         return isSuccessful;
     }
 

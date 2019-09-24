@@ -21,7 +21,7 @@ public class PaymentServiceTest {
         User user = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString());
         UserService userService = new UserService();
         userService.saveOrUpdateUser(user);
-        assertFalse(paymentService.purchase(user.getEmail(), User.LIMIT + 1).isSuccessful());
+        assertFalse(paymentService.purchase(user.getEmail(), User.LIMIT + 1).getIsSuccessful());
     }
 
     @Test
