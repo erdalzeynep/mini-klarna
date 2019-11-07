@@ -2,11 +2,18 @@ package dal.zeynep.miniklarna.service;
 
 import dal.zeynep.miniklarna.model.OrderModel;
 import dal.zeynep.miniklarna.model.User;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PaymentService {
 
-    private UserService userService = new UserService();
+    private final UserService userService;
+
     private OrderService orderService = new OrderService();
+
+    public PaymentService(UserService userService) {
+        this.userService = userService;
+    }
 
     public OrderModel purchase(String userEmail, Integer price) {
 

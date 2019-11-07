@@ -1,5 +1,6 @@
 package unittest;
 
+import dal.zeynep.miniklarna.Application;
 import dal.zeynep.miniklarna.model.OrderModel;
 import dal.zeynep.miniklarna.model.User;
 import dal.zeynep.miniklarna.service.OrderService;
@@ -8,23 +9,37 @@ import dal.zeynep.miniklarna.service.UserService;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Application.class, webEnvironment = RANDOM_PORT)
 public class OrderServiceTest {
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private PaymentService paymentService;
+
     @Test
     public void shouldUpdateOrderAsPaid() {
-        PaymentService paymentService = new PaymentService();
+
         User user = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString());
-        UserService userService = new UserService();
         userService.saveOrUpdateUser(user);
         String userEmail = user.getEmail();
         OrderModel order = paymentService.purchase(userEmail, 150);
         paymentService.pay(userEmail, order.getOrderId());
+
         OrderService orderService = new OrderService();
         OrderModel persistedOrder = orderService.getOrderDetail(order.getOrderId());
         assertTrue(persistedOrder.isPaid());
@@ -32,10 +47,9 @@ public class OrderServiceTest {
 
     @Test
     public void shouldRetrieveSpecificUserOrders() {
-        PaymentService paymentService = new PaymentService();
+
         OrderService orderService = new OrderService();
         User user = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString());
-        UserService userService = new UserService();
         userService.saveOrUpdateUser(user);
         String userEmail = user.getEmail();
         paymentService.purchase(userEmail, 10);
@@ -46,10 +60,9 @@ public class OrderServiceTest {
 
     @Test
     public void shouldRetrieveSpecificOrderDetails() {
-        PaymentService paymentService = new PaymentService();
+
         OrderService orderService = new OrderService();
         User user = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString());
-        UserService userService = new UserService();
         userService.saveOrUpdateUser(user);
         String userEmail = user.getEmail();
         OrderModel actualOrder = paymentService.purchase(userEmail, 10);

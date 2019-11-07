@@ -1,5 +1,6 @@
 package unittest;
 
+import dal.zeynep.miniklarna.Application;
 import dal.zeynep.miniklarna.model.OrderModel;
 import dal.zeynep.miniklarna.model.User;
 import dal.zeynep.miniklarna.service.PaymentService;
@@ -7,26 +8,36 @@ import dal.zeynep.miniklarna.service.UserService;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Application.class, webEnvironment = RANDOM_PORT)
 public class PaymentServiceTest {
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private PaymentService paymentService;
 
     @Test
     public void shouldNotPurchaseMoreThanUserLimit() {
-        PaymentService paymentService = new PaymentService();
         User user = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString());
-        UserService userService = new UserService();
         userService.saveOrUpdateUser(user);
         assertFalse(paymentService.purchase(user.getEmail(), User.LIMIT + 1).getIsSuccessful());
     }
 
     @Test
     public void shouldRetrieveSpecificUserDetails() {
-        UserService userService = new UserService();
         String userEmail = UUID.randomUUID().toString();
         User user = new User(userEmail, UUID.randomUUID().toString());
         user.setTotalDebt(10);
@@ -37,8 +48,7 @@ public class PaymentServiceTest {
 
     @Test
     public void shouldNotIncreaseTotalDebtAfterRejectedPurchase() {
-        UserService userService = new UserService();
-        PaymentService paymentService = new PaymentService();
+
         String userEmail = UUID.randomUUID().toString();
         User user = new User(userEmail, UUID.randomUUID().toString());
         userService.saveOrUpdateUser(user);
@@ -51,8 +61,7 @@ public class PaymentServiceTest {
 
     @Test
     public void shouldNotDecreaseTotalDebtAfterPaymentForRejectedOrder() {
-        UserService userService = new UserService();
-        PaymentService paymentService = new PaymentService();
+
         String userEmail = UUID.randomUUID().toString();
         User user = new User(userEmail, UUID.randomUUID().toString());
         userService.saveOrUpdateUser(user);

@@ -2,8 +2,9 @@ package dal.zeynep.miniklarna.service;
 
 import dal.zeynep.miniklarna.HibernateUtil;
 import dal.zeynep.miniklarna.model.User;
+import dal.zeynep.miniklarna.repository.UserRepository;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -12,18 +13,16 @@ import javax.persistence.criteria.Root;
 
 @Component
 public class UserService {
-    private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+
+    private final UserRepository repository;
+
+    @Autowired
+    public UserService(UserRepository repository) {
+        this.repository = repository;
+    }
 
     public User getUserDetail(String userEmail) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<User> query = builder.createQuery(User.class);
-
-        Root<User> root = query.from(User.class);
-        query.select(root).where(builder.equal(root.get("email"), userEmail));
-        User user = session.createQuery(query).uniqueResult();
-        session.close();
-        return user;
+        return repository.findUserByEmail(userEmail);
     }
 
     public User authenticate(String userEmail, String password) {
@@ -44,11 +43,7 @@ public class UserService {
 
     public User newUser(String email, String password) {
         User user = new User(email, password);
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.save(user);
-        session.getTransaction().commit();
-        session.close();
+        this.saveOrUpdateUser(user);
         return user;
     }
 
@@ -58,10 +53,6 @@ public class UserService {
     }
 
     public void saveOrUpdateUser(User user) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.saveOrUpdate(user);
-        session.getTransaction().commit();
-        session.close();
+        repository.save(user);
     }
 }
