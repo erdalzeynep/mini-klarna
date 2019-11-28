@@ -55,6 +55,7 @@ public class OrderControllerTest {
     @WithMockUser(value = "spring")
     @Test
     public void shouldReturnAuthenticatedUsersOrderList() throws Exception {
+
         List<OrderModel> orderList = new ArrayList<>();
         OrderModel unpaidOrder = new OrderModel("spring", 30, true);
         OrderModel paidOrder = new OrderModel("spring", 40, false);

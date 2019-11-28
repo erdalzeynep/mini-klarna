@@ -1,23 +1,23 @@
 package dal.zeynep.miniklarna.dto;
 
 public class OrderDto {
-    private int orderId;
+    private long orderId;
     private boolean isPaid;
     private boolean isSuccessful;
     private Integer price;
 
-    public OrderDto(int orderId, boolean isPaid, boolean isSuccessful, Integer price) {
+    public OrderDto(long orderId, boolean isPaid, boolean isSuccessful, Integer price) {
         this.orderId = orderId;
         this.isPaid = isPaid;
         this.isSuccessful = isSuccessful;
         this.price = price;
     }
 
-    public int getOrderId() {
+    public long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(int orderId) {
+    public void setOrderId(long orderId) {
         this.orderId = orderId;
     }
 

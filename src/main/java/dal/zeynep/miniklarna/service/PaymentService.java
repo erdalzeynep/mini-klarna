@@ -2,6 +2,7 @@ package dal.zeynep.miniklarna.service;
 
 import dal.zeynep.miniklarna.model.OrderModel;
 import dal.zeynep.miniklarna.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -9,10 +10,12 @@ public class PaymentService {
 
     private final UserService userService;
 
-    private OrderService orderService = new OrderService();
+    private final OrderService orderService;
 
-    public PaymentService(UserService userService) {
+    @Autowired
+    public PaymentService(UserService userService, OrderService orderService) {
         this.userService = userService;
+        this.orderService = orderService;
     }
 
     public OrderModel purchase(String userEmail, Integer price) {
@@ -28,7 +31,7 @@ public class PaymentService {
         return order;
     }
 
-    public OrderModel pay(String userEmail, int orderId) {
+    public OrderModel pay(String userEmail, long orderId) {
         User user = userService.getUserDetail(userEmail);
         OrderModel order = orderService.getOrderDetail(orderId);
         if (order.getIsSuccessful()) {

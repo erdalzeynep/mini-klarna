@@ -2,50 +2,35 @@ package dal.zeynep.miniklarna.service;
 
 import dal.zeynep.miniklarna.HibernateUtil;
 import dal.zeynep.miniklarna.model.OrderModel;
-import org.hibernate.Session;
+import dal.zeynep.miniklarna.repository.OrderRepository;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class OrderService {
 
+    private final OrderRepository repository;
+
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+
+    public OrderService(OrderRepository repository) {
+        this.repository = repository;
+    }
 
     public List<OrderModel> getUserOrders(String userEmail) {
 
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<OrderModel> query = builder.createQuery(OrderModel.class);
-
-        Root<OrderModel> root = query.from(OrderModel.class);
-        query.select(root).where(builder.equal(root.get("userEmail"), userEmail));
-        List<OrderModel> orders = session.createQuery(query).getResultList();
-        session.close();
-        return orders;
+        return repository.findOrdersByUserEmail(userEmail);
     }
 
-    public OrderModel getOrderDetail(int orderId) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<OrderModel> query = builder.createQuery(OrderModel.class);
-
-        Root<OrderModel> root = query.from(OrderModel.class);
-        query.select(root).where(builder.equal(root.get("orderId"), orderId));
-        OrderModel order = session.createQuery(query).uniqueResult();
-        session.close();
-        return order;
+    public OrderModel getOrderDetail(long orderId) {
+        Optional order = repository.findById(orderId);
+        return (order.isPresent()) ? (OrderModel) order.get() : null;
     }
 
     public void saveOrUpdateOrder(OrderModel order) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.saveOrUpdate(order);
-        session.getTransaction().commit();
-        session.close();
+        repository.save(order);
     }
 }

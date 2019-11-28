@@ -8,7 +8,7 @@ public class OrderModel {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int orderId;
+    private long orderId;
     @Column
     private String userEmail;
     @Column
@@ -36,11 +36,11 @@ public class OrderModel {
         isSuccessful = successful;
     }
 
-    public int getOrderId() {
+    public long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(int orderId) {
+    public void setOrderId(long orderId) {
         this.orderId = orderId;
     }
 

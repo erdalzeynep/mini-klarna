@@ -31,6 +31,9 @@ public class OrderServiceTest {
     @Autowired
     private PaymentService paymentService;
 
+    @Autowired
+    private OrderService orderService;
+
     @Test
     public void shouldUpdateOrderAsPaid() {
 
@@ -40,7 +43,6 @@ public class OrderServiceTest {
         OrderModel order = paymentService.purchase(userEmail, 150);
         paymentService.pay(userEmail, order.getOrderId());
 
-        OrderService orderService = new OrderService();
         OrderModel persistedOrder = orderService.getOrderDetail(order.getOrderId());
         assertTrue(persistedOrder.isPaid());
     }
@@ -48,7 +50,6 @@ public class OrderServiceTest {
     @Test
     public void shouldRetrieveSpecificUserOrders() {
 
-        OrderService orderService = new OrderService();
         User user = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString());
         userService.saveOrUpdateUser(user);
         String userEmail = user.getEmail();
@@ -61,7 +62,6 @@ public class OrderServiceTest {
     @Test
     public void shouldRetrieveSpecificOrderDetails() {
 
-        OrderService orderService = new OrderService();
         User user = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString());
         userService.saveOrUpdateUser(user);
         String userEmail = user.getEmail();
